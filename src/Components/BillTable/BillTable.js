@@ -1,4 +1,6 @@
+import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
+import "./BillTable.css";
 
 function BillTable() {
   return (
@@ -22,7 +24,20 @@ function BillTable() {
             <td>Table cell</td>
             <td>Table cell</td>
             <td>Table cell</td>
-            <td>Table cell</td>
+            <td>
+              <div className="action-container d-flex justify-content-center">
+                <Button
+                  className="btn btn-primary me-2 btn-margin"
+                  size="sm"
+                  variant="primary"
+                >
+                  Edit
+                </Button>
+                <Button className="btn btn-danger " size="sm" variant="danger">
+                  Delete
+                </Button>
+              </div>
+            </td>
           </tr>
         </tbody>
       </Table>
