@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
+import { PowerHackUserContext } from "../../context/PowerHackUserContext";
 import BillHeader from "../BillHeader/BillHeader";
 
 import "./BillTable.css";
 import EditBillModal from "./EditBillModal";
 
 function BillTable() {
-  const [showEditBillModal, setShowEditBillModal] = useState(false);
+  const { user, setUser } = useContext(PowerHackUserContext);
 
+  console.log(user);
+
+  const [showEditBillModal, setShowEditBillModal] = useState(false);
   const handleCloseEditBillModal = () => setShowEditBillModal(false);
   const handleShowEditBillModal = () => setShowEditBillModal(true);
   return (

@@ -1,9 +1,54 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
+import { PowerHackUserContext } from "../../context/PowerHackUserContext";
 import "./Signup.css";
 
 const Signup = () => {
   const navigate = useNavigate();
+
+  const { user, setUser } = useContext(PowerHackUserContext);
+
+  const handleSubmitSignUp = async (e) => {
+    e.preventDefault();
+
+    const email = e.target.email.value;
+    const name = e.target.name.value;
+    const password = e.target.password.value;
+
+    await axios
+      .post("http://localhost:9000/api/registration", {
+        email: email,
+        name: name,
+        password: password,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          e.target.reset();
+
+          localStorage.setItem("userToken", res.data.token);
+          setUser(res.data.result);
+          swal({
+            text: "Sign-up Successful!",
+            icon: "success",
+            button: "OK!",
+            // className: "modal_class_success",
+          }).then((isConfirm) => {
+            if (isConfirm) {
+              navigate("/billings");
+            }
+          });
+        } else {
+          alert(res.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e.response?.data?.message);
+      })
+      .finally(() => {});
+  };
+
   return (
     <div className="container">
       <div className="row">
@@ -13,12 +58,13 @@ const Signup = () => {
               <h5 className="card-title text-center mb-5 fw-light fs-5">
                 Sign Up
               </h5>
-              <form>
+              <form onSubmit={handleSubmitSignUp}>
                 <div className="form-floating mb-3">
                   <input
                     type="text"
                     className="form-control"
                     id="floatingInputName"
+                    name="name"
                     placeholder="Your name"
                   />
                   <label htmlFor="floatingInputName">Name</label>
@@ -27,6 +73,7 @@ const Signup = () => {
                   <input
                     type="email"
                     className="form-control"
+                    name="email"
                     id="floatingInput"
                     placeholder="name@example.com"
                   />
@@ -36,6 +83,7 @@ const Signup = () => {
                   <input
                     type="password"
                     className="form-control"
+                    name="password"
                     id="floatingPassword"
                     placeholder="Password"
                   />
@@ -60,7 +108,7 @@ const Signup = () => {
                     className="btn btn-primary btn-login text-uppercase fw-bold"
                     type="submit"
                   >
-                    Sign in
+                    Sign Up
                   </button>
                 </div>
                 <hr className="my-4" />
