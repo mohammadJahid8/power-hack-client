@@ -28,14 +28,10 @@ function HeaderNav() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto"></Nav>
           <Nav>
-            {user ? (
-              <Nav.Link href="#deets" onClick={handleLogOut}>
-                Sign Out
-              </Nav.Link>
+            {user?.email ? (
+              <Nav.Link onClick={handleLogOut}>Sign Out</Nav.Link>
             ) : (
-              <Nav.Link href="#deets" onClick={() => navigate("/signin")}>
-                Sign In
-              </Nav.Link>
+              <Nav.Link onClick={() => navigate("/signin")}>Sign In</Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>

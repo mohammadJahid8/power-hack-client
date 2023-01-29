@@ -6,6 +6,7 @@ export default function PowerHackUserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [isApprove, setIsApprove] = useState(false);
+  const [refetch, setrefetch] = useState(false);
   // console.log(localStorage)
 
   useEffect(() => {
@@ -20,7 +21,6 @@ export default function PowerHackUserProvider({ children }) {
         })
         .then((res) => {
           if (res.status === 200) {
-            console.log(res.data.result);
             setUser(res.data.result);
           }
         })
@@ -28,11 +28,12 @@ export default function PowerHackUserProvider({ children }) {
           setIsAuthenticating(false);
         });
     }
-  }, [localStorage.getItem("UserToken")]);
+  }, [localStorage.getItem("UserToken"), refetch]);
 
   const logout = () => {
     setUser({});
     localStorage.removeItem("UserToken");
+    setrefetch(true);
   };
   return (
     <PowerHackUserContext.Provider

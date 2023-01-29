@@ -12,7 +12,7 @@ function App() {
       <HeaderNav />
       <Routes>
         <Route path="/singup" element={<Signup />} />
-        <Route path="/singin" element={<Signin />} />
+        <Route path="/signin" element={<Signin />} />
         <Route path="/billings" element={<BillTable />} />
       </Routes>
     </div>
