@@ -4,8 +4,13 @@ import Table from "react-bootstrap/Table";
 import BillHeader from "../BillHeader/BillHeader";
 
 import "./BillTable.css";
+import EditBillModal from "./EditBillModal";
 
 function BillTable() {
+  const [showEditBillModal, setShowEditBillModal] = useState(false);
+
+  const handleCloseEditBillModal = () => setShowEditBillModal(false);
+  const handleShowEditBillModal = () => setShowEditBillModal(true);
   return (
     <div className="container " style={{ marginTop: "100px" }}>
       <BillHeader />
@@ -34,6 +39,7 @@ function BillTable() {
                   className="btn btn-primary me-2 btn-margin"
                   size="sm"
                   variant="primary"
+                  onClick={handleShowEditBillModal}
                 >
                   Edit
                 </Button>
@@ -45,6 +51,12 @@ function BillTable() {
           </tr>
         </tbody>
       </Table>
+
+      <EditBillModal
+        handleCloseEditBillModal={handleCloseEditBillModal}
+        handleShowEditBillModal={handleShowEditBillModal}
+        showEditBillModal={showEditBillModal}
+      />
     </div>
   );
 }
