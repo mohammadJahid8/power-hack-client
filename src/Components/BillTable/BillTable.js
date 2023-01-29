@@ -11,13 +11,13 @@ import EditBillModal from "./EditBillModal";
 function BillTable() {
   const { user } = useContext(PowerHackUserContext);
   const [showEditBillModal, setShowEditBillModal] = useState(false);
+  const [editData, seteditData] = useState(false);
   const handleCloseEditBillModal = () => setShowEditBillModal(false);
   const handleShowEditBillModal = () => setShowEditBillModal(true);
   const [billingData, setBillingData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
-  console.log(billingData, currentPage);
+  const [refetch, setRefetch] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +30,7 @@ function BillTable() {
       setTotalPages(response.data.totalPages);
     };
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, refetch]);
 
   const handlePrevClick = () => {
     if (currentPage > 1) {
@@ -75,7 +75,10 @@ function BillTable() {
                     className="btn btn-primary me-2 btn-margin"
                     size="sm"
                     variant="primary"
-                    onClick={handleShowEditBillModal}
+                    onClick={() => {
+                      handleShowEditBillModal();
+                      seteditData(data);
+                    }}
                   >
                     Edit
                   </Button>
@@ -109,6 +112,9 @@ function BillTable() {
         handleCloseEditBillModal={handleCloseEditBillModal}
         handleShowEditBillModal={handleShowEditBillModal}
         showEditBillModal={showEditBillModal}
+        editData={editData}
+        setRefetch={setRefetch}
+        refetch={refetch}
       />
     </div>
   );
