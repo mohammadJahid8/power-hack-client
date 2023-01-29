@@ -5,6 +5,7 @@ import Signup from "./Components/Signup/Signup";
 import Signin from "./Components/Signin/Signin";
 import HeaderNav from "./Components/HeaderNav/HeaderNav";
 import BillTable from "./Components/BillTable/BillTable";
+import ProtectedRoute from "./Utils/ProtectedRoute";
 
 function App() {
   return (
@@ -14,7 +15,14 @@ function App() {
         <Route path="/" element={<Signin />} />
         <Route path="/singup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/billings" element={<BillTable />} />
+        <Route
+          path="/billings"
+          element={
+            <ProtectedRoute>
+              <BillTable />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );

@@ -10,17 +10,19 @@ export default function PowerHackUserProvider({ children }) {
   // console.log(localStorage)
 
   useEffect(() => {
-    if (localStorage.getItem("UserToken")) {
+    console.log(localStorage.getItem("userToken"));
+    if (localStorage.getItem("userToken")) {
       setIsAuthenticating(true);
       axios
         .get("http://localhost:9000/api/current-user", {
           headers: {
-            authorization: `Bearer ${localStorage.getItem("UserToken")}`,
+            authorization: `Bearer ${localStorage.getItem("userToken")}`,
             // authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjY3ZWU2NjViMzdmYmI5YTdkOWVkOSIsImlhdCI6MTY3Mzg4OTc0NCwiZXhwIjoxNjczOTExMzQ0fQ.EumFpfWOAzivWXztrV89X_I9iIhY3LMq7XBrILQAPWE`,
           },
         })
         .then((res) => {
           if (res.status === 200) {
+            console.log(res.data);
             setUser(res.data.result);
           }
         })
@@ -28,11 +30,11 @@ export default function PowerHackUserProvider({ children }) {
           setIsAuthenticating(false);
         });
     }
-  }, [localStorage.getItem("UserToken"), refetch]);
+  }, []);
 
   const logout = () => {
     setUser({});
-    localStorage.removeItem("UserToken");
+    localStorage.removeItem("userToken");
     setrefetch(true);
   };
   return (
