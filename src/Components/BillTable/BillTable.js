@@ -19,16 +19,20 @@ function BillTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [refetch, setRefetch] = useState(false);
+  const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      // setGenerating(true);
       const response = await axios.get(
         `http://localhost:9000/api/billing/pagination?page=${currentPage}`
       );
-      console.log(response.data);
 
-      setBillingData(response.data.result);
-      setTotalPages(response.data.totalPages);
+      setTimeout(() => {
+        setGenerating(false);
+        setBillingData(response?.data?.result?.reverse());
+        setTotalPages(response.data.totalPages);
+      }, 1000);
     };
     fetchData();
   }, [currentPage, refetch]);
@@ -88,11 +92,16 @@ function BillTable() {
 
   return (
     <div className="container " style={{ marginTop: "100px" }}>
-      <BillHeader />
+      <BillHeader
+        setRefetch={setRefetch}
+        refetch={refetch}
+        setGenerating={setGenerating}
+        generating={generating}
+      />
       <Table responsive>
         <thead>
           <tr>
-            <th>Billing Id</th>
+            <th> {generating ? "Generating Id.." : "Billing Id"}</th>
             <th>Full Name</th>
             <th>Email</th>
             <th>Phone</th>

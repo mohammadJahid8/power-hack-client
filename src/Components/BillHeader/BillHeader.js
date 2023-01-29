@@ -7,7 +7,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import AddNewBillModal from "../BillTable/AddNewBillModal";
 
-function BillHeader() {
+function BillHeader({ setRefetch, refetch, setGenerating, generating }) {
   const [showNewBillModal, setShowNewBillModal] = useState(false);
 
   const handleCloseNewBillModal = () => setShowNewBillModal(false);
@@ -52,6 +52,10 @@ function BillHeader() {
         handleCloseNewBillModal={handleCloseNewBillModal}
         handleShowNewBillModal={handleShowNewBillModal}
         showNewBillModal={showNewBillModal}
+        setRefetch={setRefetch}
+        refetch={refetch}
+        setGenerating={setGenerating}
+        generating={generating}
       />
     </>
   );

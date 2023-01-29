@@ -9,6 +9,10 @@ function AddNewBillModal({
   handleCloseNewBillModal,
   handleShowNewBillModal,
   showNewBillModal,
+  refetch,
+  setRefetch,
+  setGenerating,
+  generating,
 }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,13 +31,18 @@ function AddNewBillModal({
       })
       .then((res) => {
         if (res.status === 200) {
-          e.target.reset();
           handleCloseNewBillModal();
           swal({
             text: res.data.message,
             icon: "success",
             button: "OK!",
             // className: "modal_class_success",
+          }).then((isTrue) => {
+            if (isTrue) {
+              e.target.reset();
+              setGenerating(true);
+              setRefetch(!refetch);
+            }
           });
         } else {
           swal({
