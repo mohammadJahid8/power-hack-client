@@ -1,10 +1,12 @@
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
+import BillHeader from "../BillHeader/BillHeader";
 import "./BillTable.css";
 
 function BillTable() {
   return (
-    <div className="container">
+    <div className="container " style={{ marginTop: "100px" }}>
+      <BillHeader />
       <Table responsive>
         <thead>
           <tr>
