@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import BillHeader from "../BillHeader/BillHeader";
+
 import "./BillTable.css";
 
 function BillTable() {
