@@ -7,7 +7,15 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import AddNewBillModal from "../BillTable/AddNewBillModal";
 
-function BillHeader({ setRefetch, refetch, setGenerating, generating }) {
+function BillHeader({
+  setRefetch,
+  refetch,
+  setGenerating,
+  generating,
+  setSearchValue,
+  handleSearch,
+  totalPaidAmount,
+}) {
   const [showNewBillModal, setShowNewBillModal] = useState(false);
 
   const handleCloseNewBillModal = () => setShowNewBillModal(false);
@@ -28,12 +36,15 @@ function BillHeader({ setRefetch, refetch, setGenerating, generating }) {
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
+                  onChange={(e) => {
+                    setSearchValue(e.target.value);
+                    handleSearch(e.target.value);
+                  }}
                 />
-                <Button variant="outline-success">Search</Button>
               </Form>
             </Nav>
             <Nav.Link href="#action1" className="me-2">
-              Paid total: 0
+              Paid total: {totalPaidAmount || "0"}
             </Nav.Link>
             <Nav.Link href="#action1">
               <Button

@@ -16,14 +16,29 @@ function BillTable() {
   const handleCloseEditBillModal = () => setShowEditBillModal(false);
   const handleShowEditBillModal = () => setShowEditBillModal(true);
   const [billingData, setBillingData] = useState([]);
+  const [allData, setAllData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [refetch, setRefetch] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [mapData, setmapData] = useState([]);
+
+  console.log(mapData, billingData);
 
   useEffect(() => {
     const fetchData = async () => {
-      // setGenerating(true);
+      const response = await axios.get(
+        `http://localhost:9000/api/billing-list`
+      );
+
+      setAllData(response?.data?.result?.reverse());
+    };
+    fetchData();
+  }, [currentPage, refetch]);
+
+  useEffect(() => {
+    const fetchData = async () => {
       const response = await axios.get(
         `http://localhost:9000/api/billing/pagination?page=${currentPage}`
       );
@@ -31,6 +46,7 @@ function BillTable() {
       setTimeout(() => {
         setGenerating(false);
         setBillingData(response?.data?.result?.reverse());
+        setmapData(response?.data?.result);
         setTotalPages(response.data.totalPages);
       }, 1000);
     };
@@ -90,13 +106,52 @@ function BillTable() {
     });
   };
 
+  let handleSearch = (searchInput) => {
+    if (searchInput.length > 0) {
+      const searchResult = allData.filter(
+        (item) =>
+          item.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+          item.email.toLowerCase().includes(searchInput.toLowerCase()) ||
+          item.phone.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      console.log(searchResult, searchInput);
+      setmapData(searchResult);
+    } else {
+      setmapData(billingData);
+    }
+  };
+
+  // calculating total paid amount
+
+  let arr = [];
+  allData?.forEach((data) => {
+    console.log(data);
+    arr.push(data.paidAmount);
+  });
+  // console.log(arr);
+
+  function sumArray(arr) {
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+      sum += arr[i];
+    }
+    return sum;
+  }
+
+  const totalPaidAmount = sumArray(arr);
+
+  console.log(totalPaidAmount);
+
   return (
-    <div className="container " style={{ marginTop: "100px" }}>
+    <div className="container mb-5" style={{ marginTop: "100px" }}>
       <BillHeader
         setRefetch={setRefetch}
         refetch={refetch}
         setGenerating={setGenerating}
         generating={generating}
+        setSearchValue={setSearchValue}
+        handleSearch={handleSearch}
+        totalPaidAmount={totalPaidAmount}
       />
       <Table responsive>
         <thead>
@@ -110,7 +165,7 @@ function BillTable() {
           </tr>
         </thead>
         <tbody>
-          {billingData?.map((data) => (
+          {mapData?.map((data) => (
             <tr>
               <td>{data.BillingId || ""}</td>
 

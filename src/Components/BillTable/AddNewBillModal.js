@@ -43,7 +43,9 @@ function AddNewBillModal({
               setGenerating(true);
               setRefetch(!refetch);
             }
+            setRefetch(!refetch);
           });
+          // setRefetch(!refetch);
         } else {
           swal({
             text: res.data.message,
