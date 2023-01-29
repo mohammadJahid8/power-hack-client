@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
+import swal from "sweetalert";
 import { PowerHackUserContext } from "../../context/PowerHackUserContext";
 import BillHeader from "../BillHeader/BillHeader";
 
@@ -42,6 +43,47 @@ function BillTable() {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
+  };
+
+  const handleDelete = (id) => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this bill.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((isConfirm) => {
+      if (isConfirm) {
+        axios
+          .delete(`http://localhost:9000/api/delete-billing/${id}`)
+          .then((res) => {
+            if (res.status === 200) {
+              setRefetch(!refetch);
+              setBillingData(billingData.filter((data) => data._id !== id));
+
+              swal({
+                text: res.data.message,
+                icon: "success",
+                button: "OK!",
+              });
+            } else {
+              swal({
+                text: res.data.message,
+                icon: "warning",
+                button: "OK!",
+              });
+            }
+          })
+          .catch((e) => {
+            swal({
+              text: e.res.data.message,
+              icon: "warning",
+              button: "OK!",
+            });
+          })
+          .finally(() => {});
+      }
+    });
   };
 
   return (
@@ -86,6 +128,7 @@ function BillTable() {
                     className="btn btn-danger "
                     size="sm"
                     variant="danger"
+                    onClick={() => handleDelete(data._id)}
                   >
                     Delete
                   </Button>
