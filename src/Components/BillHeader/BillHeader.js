@@ -12,7 +12,7 @@ function BillHeader({
   refetch,
   setGenerating,
   generating,
-  setSearchValue,
+
   handleSearch,
   totalPaidAmount,
 }) {
@@ -37,7 +37,6 @@ function BillHeader({
                   className="me-2"
                   aria-label="Search"
                   onChange={(e) => {
-                    setSearchValue(e.target.value);
                     handleSearch(e.target.value);
                   }}
                 />

@@ -85,66 +85,80 @@ function AddNewBillModal({
   return (
     <>
       <Modal show={showNewBillModal} onHide={handleCloseNewBillModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add new bill</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Full Name"
-                autoFocus
-                name="name"
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email address"
-                autoFocus
-                name="email"
-                required
-                // onChange={(e) => validateEmail(e.target.value)}
-              />
-              <p className="text-danger">{EmailErrorMsg}</p>
-            </Form.Group>
+        <div className="modal-bg">
+          <Modal.Header closeButton>
+            <Modal.Title className="text-light">Add new bill</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Full Name"
+                  autoFocus
+                  name="name"
+                  required
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email address"
+                  autoFocus
+                  name="email"
+                  required
+                  // onChange={(e) => validateEmail(e.target.value)}
+                />
+                <p className="text-danger">{EmailErrorMsg}</p>
+              </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Phone number</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter phone number"
-                autoFocus
-                name="phone"
-                required
-              />
-              <p className="text-danger">{PhoneErrorMsg}</p>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Payable Amount</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter payable amount"
-                autoFocus
-                name="paidAmount"
-                required
-              />
-            </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Phone number</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter phone number"
+                  autoFocus
+                  name="phone"
+                  required
+                />
+                <p className="text-danger">{PhoneErrorMsg}</p>
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Payable Amount</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter payable amount"
+                  autoFocus
+                  name="paidAmount"
+                  required
+                />
+              </Form.Group>
 
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseNewBillModal}>
-                Close
-              </Button>
-              <Button type="submit" variant="primary">
-                Submit
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseNewBillModal}>
+                  Close
+                </Button>
+                <Button type="submit" variant="primary">
+                  Submit
+                </Button>
+              </Modal.Footer>
+            </Form>
+          </Modal.Body>
+        </div>
       </Modal>
     </>
   );

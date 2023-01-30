@@ -66,10 +66,35 @@ body {
   opacity: 0.2;
 }
 
+.custom-loader {
+  animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .logo-style {
   font-family: "Sofia Sans Extra Condensed", sans-serif;
   font-size: 30px;
   /* font-family: "Unbounded", cursive; */
+}
+.modal-bg {
+  background-color: rgb(26, 5, 51) !important;
+}
+
+.nav-bg {
+  background-color: rgb(11, 2, 22) !important;
+  color: white !important;
+  box-shadow: 5px 5px 5px rgb(18, 3, 36) !important;
 }
 
 .App-logo {

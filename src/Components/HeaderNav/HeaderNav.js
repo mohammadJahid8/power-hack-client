@@ -24,9 +24,15 @@ function HeaderNav() {
   };
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      // bg="dark"
+      // variant="dark"
+      className="nav-bg"
+    >
       <Container>
-        <Navbar.Brand className="logo-style">
+        <Navbar.Brand className="logo-style text-white">
           <ImPower className="text-warning" />
           Power-Hack
         </Navbar.Brand>
@@ -35,12 +41,15 @@ function HeaderNav() {
           <Nav className="me-auto"></Nav>
           <Nav>
             {user?.email ? (
-              <Nav.Link onClick={handleLogOut} className="fs-5">
+              <Nav.Link onClick={handleLogOut} className="fs-5 text-white">
                 <FaSignOutAlt className="text-danger pe-1 fs-4" />
                 Sign Out
               </Nav.Link>
             ) : (
-              <Nav.Link onClick={() => navigate("/signin")} className="fs-5">
+              <Nav.Link
+                onClick={() => navigate("/signin")}
+                className="fs-5 text-white"
+              >
                 <FaSignInAlt className="text-success pe-1 fs-4" />
                 Sign In
               </Nav.Link>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import swal from "sweetalert";
 import { PowerHackUserContext } from "../../context/PowerHackUserContext";
@@ -10,6 +10,8 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import "./BillTable.css";
 import EditBillModal from "./EditBillModal";
 import HeaderNav from "../HeaderNav/HeaderNav";
+import Footer from "../Footer/Footer";
+import { ImPower } from "react-icons/im";
 
 function BillTable() {
   const { user } = useContext(PowerHackUserContext);
@@ -23,24 +25,27 @@ function BillTable() {
   const [totalPages, setTotalPages] = useState(1);
   const [refetch, setRefetch] = useState(false);
   const [generating, setGenerating] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
+  const [loading, setloading] = useState(false);
   const [mapData, setmapData] = useState([]);
   const [display, setDisplay] = useState("");
   const [hideButton, sethideButton] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setloading(true);
       const response = await axios.get(
         `http://localhost:9000/api/billing-list`
       );
 
       setAllData(response?.data?.result?.reverse());
+      setloading(false);
     };
     fetchData();
   }, [currentPage, refetch]);
 
   useEffect(() => {
     const fetchData = async () => {
+      setloading(true);
       const response = await axios.get(
         `http://localhost:9000/api/billing/pagination?page=${currentPage}`
       );
@@ -50,6 +55,7 @@ function BillTable() {
         setBillingData(response?.data?.result?.reverse());
         setmapData(response?.data?.result);
         setTotalPages(response.data.totalPages);
+        setloading(false);
       }, 500);
     };
     fetchData();
@@ -166,6 +172,16 @@ function BillTable() {
     };
   }, []);
 
+  if (loading) {
+    return (
+      <div className="" style={{ paddingTop: "300px" }}>
+        <p className="custom-loader">
+          <ImPower className="text-warning fs-2" />
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
       <HeaderNav />
@@ -177,7 +193,6 @@ function BillTable() {
           refetch={refetch}
           setGenerating={setGenerating}
           generating={generating}
-          setSearchValue={setSearchValue}
           handleSearch={handleSearch}
           totalPaidAmount={totalPaidAmount}
         />
@@ -235,7 +250,11 @@ function BillTable() {
           )}
         </Table>
 
-        {mapData?.length == 0 && <p className="text-">No data to show</p>}
+        {mapData?.length == 0 && (
+          <p className="" style={{ paddingBottom: "90px" }}>
+            No data to show
+          </p>
+        )}
 
         {!hideButton && mapData?.length > 0 && (
           <div>
@@ -270,6 +289,7 @@ function BillTable() {
           refetch={refetch}
         />
       </div>
+      <Footer />
     </>
   );
 }

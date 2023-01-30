@@ -61,66 +61,80 @@ function EditBillModal({
   return (
     <>
       <Modal show={showEditBillModal} onHide={handleCloseEditBillModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Update bill</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Full Name"
-                autoFocus
-                name="name"
-                required
-                defaultValue={editData.name}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email address"
-                autoFocus
-                name="email"
-                required
-                defaultValue={editData.email}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Phone number</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter phone number"
-                autoFocus
-                name="phone"
-                required
-                defaultValue={editData.phone}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Payable Amount</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter payable amount"
-                autoFocus
-                name="paidAmount"
-                required
-                defaultValue={editData.paidAmount}
-              />
-            </Form.Group>
+        <div className="modal-bg">
+          <Modal.Header closeButton>
+            <Modal.Title>Update bill</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Full Name"
+                  autoFocus
+                  name="name"
+                  required
+                  defaultValue={editData.name}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email address"
+                  autoFocus
+                  name="email"
+                  required
+                  defaultValue={editData.email}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Phone number</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter phone number"
+                  autoFocus
+                  name="phone"
+                  required
+                  defaultValue={editData.phone}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Payable Amount</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter payable amount"
+                  autoFocus
+                  name="paidAmount"
+                  required
+                  defaultValue={editData.paidAmount}
+                />
+              </Form.Group>
 
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseEditBillModal}>
-                Close
-              </Button>
-              <Button type="submit" variant="primary">
-                Submit
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseEditBillModal}>
+                  Close
+                </Button>
+                <Button type="submit" variant="primary">
+                  Submit
+                </Button>
+              </Modal.Footer>
+            </Form>
+          </Modal.Body>
+        </div>
       </Modal>
     </>
   );
