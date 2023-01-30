@@ -37,7 +37,7 @@ function BillTable() {
         `http://localhost:9000/api/billing-list`
       );
 
-      setAllData(response?.data?.result?.reverse());
+      setAllData(response?.data?.result);
       setloading(false);
     };
     fetchData();
@@ -52,7 +52,7 @@ function BillTable() {
 
       setTimeout(() => {
         setGenerating(false);
-        setBillingData(response?.data?.result?.reverse());
+        setBillingData(response?.data?.result);
         setmapData(response?.data?.result);
         setTotalPages(response.data.totalPages);
         setloading(false);
@@ -128,7 +128,7 @@ function BillTable() {
           item.email.toLowerCase().includes(searchInput.toLowerCase()) ||
           item.phone.toLowerCase().includes(searchInput.toLowerCase())
       );
-      console.log(searchResult, searchInput);
+
       setmapData(searchResult);
     } else {
       sethideButton(false);
@@ -181,6 +181,8 @@ function BillTable() {
       </div>
     );
   }
+
+  console.log(mapData);
 
   return (
     <>

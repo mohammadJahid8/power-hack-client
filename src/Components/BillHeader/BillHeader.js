@@ -22,9 +22,13 @@ function BillHeader({
   const handleShowNewBillModal = () => setShowNewBillModal(true);
   return (
     <>
-      <Navbar expand="lg" className="billheader-bg">
-        <Container fluid>
-          <Navbar.Collapse id="navbarScroll">
+      <div
+        expand="lg"
+        className="billheader-bg py-2"
+        style={{ zIndex: "9999" }}
+      >
+        <Container>
+          <div className="d-flex justify-content-center nav-items">
             <Nav
               className="me-auto my-2 my-lg-0"
               style={{ maxHeight: "100px" }}
@@ -42,21 +46,24 @@ function BillHeader({
                 />
               </Form>
             </Nav>
-            <Nav.Link href="#action1" className="me-2">
-              Paid total: {totalPaidAmount || "0"}
-            </Nav.Link>
-            <Nav.Link href="#action1">
-              <Button
-                variant="success"
-                size="sm"
-                onClick={handleShowNewBillModal}
-              >
-                Add new bill
-              </Button>
-            </Nav.Link>
-          </Navbar.Collapse>
+            <div
+              className="d-flex text-center"
+              style={{ alignItems: "center" }}
+            >
+              <p className="me-2 mb-0">Paid total: {totalPaidAmount || "0"}</p>
+              <p className="mb-0">
+                <Button
+                  variant="success"
+                  size="sm"
+                  onClick={handleShowNewBillModal}
+                >
+                  Add new bill
+                </Button>
+              </p>
+            </div>
+          </div>
         </Container>
-      </Navbar>
+      </div>
 
       <AddNewBillModal
         handleCloseNewBillModal={handleCloseNewBillModal}
