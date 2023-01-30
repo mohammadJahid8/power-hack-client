@@ -50,13 +50,13 @@ function BillTable() {
         `https://power-hack-server1.onrender.com/api/billing/pagination?page=${currentPage}`
       );
 
-      setTimeout(() => {
-        setGenerating(false);
-        setBillingData(response?.data?.result);
-        setmapData(response?.data?.result);
-        setTotalPages(response.data.totalPages);
-        setloading(false);
-      }, 500);
+      // setTimeout(() => {
+      setGenerating(false);
+      setBillingData(response?.data?.result);
+      setmapData(response?.data?.result);
+      setTotalPages(response.data.totalPages);
+      setloading(false);
+      // }, 100);
     };
     fetchData();
   }, [currentPage, refetch]);
