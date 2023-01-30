@@ -38,7 +38,7 @@ function AddNewBillModal({
       }
     } else {
       await axios
-        .post("http://localhost:9000/api/add-billing", {
+        .post("https://power-hack-server1.onrender.com/api/add-billing", {
           email: email,
           name: name,
           phone: phone,

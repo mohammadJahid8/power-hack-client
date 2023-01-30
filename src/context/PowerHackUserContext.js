@@ -13,7 +13,7 @@ export default function PowerHackUserProvider({ children }) {
     if (localStorage.getItem("userToken")) {
       setIsAuthenticating(true);
       axios
-        .get("http://localhost:9000/api/current-user", {
+        .get("https://power-hack-server1.onrender.com/api/current-user", {
           headers: {
             authorization: `Bearer ${localStorage.getItem("userToken")}`,
           },

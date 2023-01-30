@@ -34,7 +34,7 @@ function BillTable() {
     const fetchData = async () => {
       setloading(true);
       const response = await axios.get(
-        `http://localhost:9000/api/billing-list`
+        `https://power-hack-server1.onrender.com/api/billing-list`
       );
 
       setAllData(response?.data?.result);
@@ -47,7 +47,7 @@ function BillTable() {
     const fetchData = async () => {
       setloading(true);
       const response = await axios.get(
-        `http://localhost:9000/api/billing/pagination?page=${currentPage}`
+        `https://power-hack-server1.onrender.com/api/billing/pagination?page=${currentPage}`
       );
 
       setTimeout(() => {
@@ -84,7 +84,9 @@ function BillTable() {
     }).then((isConfirm) => {
       if (isConfirm) {
         axios
-          .delete(`http://localhost:9000/api/delete-billing/${id}`)
+          .delete(
+            `https://power-hack-server1.onrender.com/api/delete-billing/${id}`
+          )
           .then((res) => {
             if (res.status === 200) {
               setRefetch(!refetch);

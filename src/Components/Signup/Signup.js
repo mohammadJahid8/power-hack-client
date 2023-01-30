@@ -26,7 +26,7 @@ const Signup = () => {
       setEmailErrorMsg("Please enter a valid email address!");
     } else {
       await axios
-        .post("http://localhost:9000/api/registration", {
+        .post("https://power-hack-server1.onrender.com/api/registration", {
           email: email,
           name: name,
           password: password,

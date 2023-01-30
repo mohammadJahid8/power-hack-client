@@ -37,12 +37,15 @@ function EditBillModal({
       }
     } else {
       await axios
-        .put(`http://localhost:9000/api/update-billing/${editData?._id}`, {
-          email: email,
-          name: name,
-          phone: phone,
-          paidAmount: paidAmount,
-        })
+        .put(
+          `https://power-hack-server1.onrender.com/api/update-billing/${editData?._id}`,
+          {
+            email: email,
+            name: name,
+            phone: phone,
+            paidAmount: paidAmount,
+          }
+        )
         .then((res) => {
           if (res.status === 200) {
             e.target.reset();
