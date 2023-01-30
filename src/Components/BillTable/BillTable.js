@@ -23,6 +23,7 @@ function BillTable() {
   const [generating, setGenerating] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [mapData, setmapData] = useState([]);
+  const [display, setDisplay] = useState("");
 
   console.log(mapData, billingData);
 
@@ -106,6 +107,7 @@ function BillTable() {
     });
   };
 
+  // ---------->search functionality start<------------------------------------------------
   let handleSearch = (searchInput) => {
     if (searchInput.length > 0) {
       const searchResult = allData.filter(
@@ -120,15 +122,14 @@ function BillTable() {
       setmapData(billingData);
     }
   };
+  // ---------->search functionality end<------------------------------------------------
 
-  // calculating total paid amount
-
+  // ---------->calculating total paid amount<------------------------------------------
   let arr = [];
   allData?.forEach((data) => {
     console.log(data);
     arr.push(data.paidAmount);
   });
-  // console.log(arr);
 
   function sumArray(arr) {
     let sum = 0;
@@ -137,13 +138,32 @@ function BillTable() {
     }
     return sum;
   }
-
   const totalPaidAmount = sumArray(arr);
+  // ---------->calculating total paid amount end<------------------------------------------------
 
-  console.log(totalPaidAmount);
+  // ---------->Type writer animation<------------------------------------------------
+  const welcomeText = `Welcome to power hack...`;
+
+  useEffect(() => {
+    let i = 0;
+    const type = () => {
+      setDisplay(welcomeText.substring(0, i));
+      i++;
+      if (i <= welcomeText.length) {
+        setTimeout(type, 200);
+      }
+    };
+    type();
+
+    return () => {
+      clearTimeout(type);
+    };
+  }, []);
 
   return (
     <div className="container mb-5" style={{ marginTop: "100px" }}>
+      {display.length === welcomeText.length ? null : <h2>{display}</h2>}
+
       <BillHeader
         setRefetch={setRefetch}
         refetch={refetch}
