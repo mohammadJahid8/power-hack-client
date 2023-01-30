@@ -27,10 +27,21 @@ function AddNewBillModal({
     let regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     const result = regex.test(email);
 
-    if (!result) {
-      setEmailErrorMsg("Please enter a valid email address!");
-    } else if (phone.length !== 11) {
-      setEmailErrorMsg("Phone must be 11 digits!");
+    console.log(!result || phone.length !== 11);
+    setPhoneErrorMsg("");
+    setEmailErrorMsg("");
+    if (!result || phone.length !== 11) {
+      console.log("inside");
+      if (!result) {
+        console.log("inside email");
+        setEmailErrorMsg("Please enter a valid email address!");
+        // setPhoneErrorMsg("");
+      }
+      if (phone.length !== 11) {
+        console.log("inside phone");
+        setPhoneErrorMsg("Phone number must be 11 digits!");
+        // setEmailErrorMsg("");
+      }
     } else {
       await axios
         .post("http://localhost:9000/api/add-billing", {
@@ -117,7 +128,9 @@ function AddNewBillModal({
                 required
                 // onChange={(e) => validateEmail(e.target.value)}
               />
+              <p className="text-danger">{EmailErrorMsg}</p>
             </Form.Group>
+
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Phone number</Form.Label>
               <Form.Control
@@ -127,6 +140,7 @@ function AddNewBillModal({
                 name="phone"
                 required
               />
+              <p className="text-danger">{PhoneErrorMsg}</p>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Payable Amount</Form.Label>
