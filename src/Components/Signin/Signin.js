@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { PowerHackUserContext } from "../../context/PowerHackUserContext";
+import { ImPower } from "react-icons/im";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const Signin = () => {
               text: "Sign-in Successful!",
               icon: "success",
               button: "OK!",
-              // className: "modal_class_success",
+              className: "swal-style",
             }).then((isConfirm) => {
               if (isConfirm) {
                 navigate("/billings");
@@ -51,7 +52,7 @@ const Signin = () => {
               text: res.data.message,
               icon: "warning",
               button: "OK!",
-              // className: "modal_class_success",
+              className: "swal-style",
             });
           }
         })
@@ -60,7 +61,7 @@ const Signin = () => {
             text: e.response?.data?.message,
             icon: "warning",
             button: "OK!",
-            // className: "modal_class_success",
+            className: "swal-style",
           });
         })
         .finally(() => {});
@@ -72,7 +73,8 @@ const Signin = () => {
         <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
           <div className="card border-0 shadow rounded-3 my-5">
             <div className="card-body p-4 p-sm-5">
-              <h5 className="card-title text-center mb-5 fw-light fs-5">
+              <h5 className="card-title text-center mb-5 fw-light fs-3">
+                <ImPower className="text-warning" />
                 Sign In
               </h5>
               <form onSubmit={handleSubmitSignIn}>
@@ -85,7 +87,9 @@ const Signin = () => {
                     placeholder="name@example.com"
                     required
                   />
-                  <label htmlFor="floatingInput">Email address</label>
+                  <label htmlFor="floatingInput " style={{ color: "black" }}>
+                    Email address
+                  </label>
                   <p className="text-danger text-start">{EmailErrorMsg}</p>
                 </div>
                 <div className="form-floating mb-3">
@@ -97,7 +101,9 @@ const Signin = () => {
                     placeholder="Password"
                     required
                   />
-                  <label htmlFor="floatingPassword">Password</label>
+                  <label htmlFor="floatingPassword " style={{ color: "black" }}>
+                    Password
+                  </label>
                 </div>
                 <div className="form-check mb-3 text-start">
                   <input

@@ -7,7 +7,6 @@ export default function PowerHackUserProvider({ children }) {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [isApprove, setIsApprove] = useState(false);
   const [refetch, setrefetch] = useState(false);
-  // console.log(localStorage)
 
   useEffect(() => {
     console.log(localStorage.getItem("userToken"));
@@ -17,7 +16,6 @@ export default function PowerHackUserProvider({ children }) {
         .get("http://localhost:9000/api/current-user", {
           headers: {
             authorization: `Bearer ${localStorage.getItem("userToken")}`,
-            // authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYjY3ZWU2NjViMzdmYmI5YTdkOWVkOSIsImlhdCI6MTY3Mzg4OTc0NCwiZXhwIjoxNjczOTExMzQ0fQ.EumFpfWOAzivWXztrV89X_I9iIhY3LMq7XBrILQAPWE`,
           },
         })
         .then((res) => {

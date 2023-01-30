@@ -10,7 +10,10 @@ import ProtectedRoute from "./Utils/ProtectedRoute";
 function App() {
   return (
     <div className="App">
-      <HeaderNav />
+      <div class="blurdiv"></div>
+
+      <div class="blurdiv2"></div>
+
       <Routes>
         <Route path="/" element={<Signin />} />
         <Route path="/singup" element={<Signup />} />

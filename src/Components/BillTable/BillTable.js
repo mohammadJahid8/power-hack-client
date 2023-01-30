@@ -5,9 +5,11 @@ import Table from "react-bootstrap/Table";
 import swal from "sweetalert";
 import { PowerHackUserContext } from "../../context/PowerHackUserContext";
 import BillHeader from "../BillHeader/BillHeader";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 
 import "./BillTable.css";
 import EditBillModal from "./EditBillModal";
+import HeaderNav from "../HeaderNav/HeaderNav";
 
 function BillTable() {
   const { user } = useContext(PowerHackUserContext);
@@ -24,8 +26,7 @@ function BillTable() {
   const [searchValue, setSearchValue] = useState("");
   const [mapData, setmapData] = useState([]);
   const [display, setDisplay] = useState("");
-
-  console.log(mapData, billingData);
+  const [hideButton, sethideButton] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +50,7 @@ function BillTable() {
         setBillingData(response?.data?.result?.reverse());
         setmapData(response?.data?.result);
         setTotalPages(response.data.totalPages);
-      }, 1000);
+      }, 500);
     };
     fetchData();
   }, [currentPage, refetch]);
@@ -71,6 +72,7 @@ function BillTable() {
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this bill.",
       icon: "warning",
+      className: "swal-style",
       buttons: true,
       dangerMode: true,
     }).then((isConfirm) => {
@@ -86,12 +88,14 @@ function BillTable() {
                 text: res.data.message,
                 icon: "success",
                 button: "OK!",
+                className: "swal-style",
               });
             } else {
               swal({
                 text: res.data.message,
                 icon: "warning",
                 button: "OK!",
+                className: "swal-style",
               });
             }
           })
@@ -100,6 +104,7 @@ function BillTable() {
               text: e.res.data.message,
               icon: "warning",
               button: "OK!",
+              className: "swal-style",
             });
           })
           .finally(() => {});
@@ -110,6 +115,7 @@ function BillTable() {
   // ---------->search functionality start<------------------------------------------------
   let handleSearch = (searchInput) => {
     if (searchInput.length > 0) {
+      sethideButton(true);
       const searchResult = allData.filter(
         (item) =>
           item.name.toLowerCase().includes(searchInput.toLowerCase()) ||
@@ -119,6 +125,7 @@ function BillTable() {
       console.log(searchResult, searchInput);
       setmapData(searchResult);
     } else {
+      sethideButton(false);
       setmapData(billingData);
     }
   };
@@ -127,7 +134,6 @@ function BillTable() {
   // ---------->calculating total paid amount<------------------------------------------
   let arr = [];
   allData?.forEach((data) => {
-    console.log(data);
     arr.push(data.paidAmount);
   });
 
@@ -161,89 +167,110 @@ function BillTable() {
   }, []);
 
   return (
-    <div className="container mb-5" style={{ marginTop: "100px" }}>
-      {display.length === welcomeText.length ? null : <h2>{display}</h2>}
+    <>
+      <HeaderNav />
+      <div className="container mb-5" style={{ marginTop: "100px" }}>
+        {display.length === welcomeText.length ? null : <h2>{display}</h2>}
 
-      <BillHeader
-        setRefetch={setRefetch}
-        refetch={refetch}
-        setGenerating={setGenerating}
-        generating={generating}
-        setSearchValue={setSearchValue}
-        handleSearch={handleSearch}
-        totalPaidAmount={totalPaidAmount}
-      />
-      <Table responsive>
-        <thead>
-          <tr>
-            <th> {generating ? "Generating Id.." : "Billing Id"}</th>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Paid amount</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {mapData?.map((data) => (
+        <BillHeader
+          setRefetch={setRefetch}
+          refetch={refetch}
+          setGenerating={setGenerating}
+          generating={generating}
+          setSearchValue={setSearchValue}
+          handleSearch={handleSearch}
+          totalPaidAmount={totalPaidAmount}
+        />
+        <Table responsive className="text-light">
+          <thead>
             <tr>
-              <td>{data.BillingId || ""}</td>
-
-              <td>{data.name || ""}</td>
-
-              <td>{data.email || ""}</td>
-              <td>{data.phone || ""}</td>
-              <td>{data.paidAmount || ""}</td>
-
-              <td>
-                <div className="action-container d-flex justify-content-center">
-                  <Button
-                    className="btn btn-primary me-2 btn-margin"
-                    size="sm"
-                    variant="primary"
-                    onClick={() => {
-                      handleShowEditBillModal();
-                      seteditData(data);
-                    }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    className="btn btn-danger "
-                    size="sm"
-                    variant="danger"
-                    onClick={() => handleDelete(data._id)}
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </td>
+              <th> SL No.</th>
+              <th> {generating ? "Generating Id.." : "Billing Id"}</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Paid amount</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          {mapData?.length > 0 && (
+            <tbody>
+              {mapData?.map((data, index) => (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{data.BillingId || ""}</td>
 
-      <div>
-        <button onClick={handlePrevClick} disabled={currentPage === 1}>
-          Prev
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button onClick={handleNextClick} disabled={currentPage === totalPages}>
-          Next
-        </button>
+                  <td>{data.name || ""}</td>
+
+                  <td>{data.email || ""}</td>
+                  <td>{data.phone || ""}</td>
+                  <td>{data.paidAmount || ""}</td>
+
+                  <td>
+                    <div className="action-container d-flex justify-content-center">
+                      <Button
+                        className="btn btn-primary me-2 btn-margin"
+                        size="sm"
+                        variant="primary"
+                        onClick={() => {
+                          handleShowEditBillModal();
+                          seteditData(data);
+                        }}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        className="btn btn-danger "
+                        size="sm"
+                        variant="danger"
+                        onClick={() => handleDelete(data._id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
+        </Table>
+
+        {mapData?.length == 0 && <p className="text-">No data to show</p>}
+
+        {!hideButton && mapData?.length > 0 && (
+          <div>
+            <button
+              className="me-2 btn btn-primary btn-sm"
+              onClick={handlePrevClick}
+              disabled={currentPage === 1}
+            >
+              <BsArrowLeft />
+              Prev
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="ms-2 btn btn-primary btn-sm "
+              onClick={handleNextClick}
+              disabled={currentPage === totalPages}
+            >
+              Next
+              <BsArrowRight className="" />
+            </button>
+          </div>
+        )}
+
+        <EditBillModal
+          handleCloseEditBillModal={handleCloseEditBillModal}
+          handleShowEditBillModal={handleShowEditBillModal}
+          showEditBillModal={showEditBillModal}
+          editData={editData}
+          setRefetch={setRefetch}
+          refetch={refetch}
+        />
       </div>
-
-      <EditBillModal
-        handleCloseEditBillModal={handleCloseEditBillModal}
-        handleShowEditBillModal={handleShowEditBillModal}
-        showEditBillModal={showEditBillModal}
-        editData={editData}
-        setRefetch={setRefetch}
-        refetch={refetch}
-      />
-    </div>
+    </>
   );
 }
 

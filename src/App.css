@@ -1,5 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed&family=Unbounded&display=swap");
+
 .App {
   text-align: center;
+}
+
+body {
+  /* From https://css.glass */
+  background-color: rgb(11, 2, 22) !important;
+  color: white !important;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif !important;
+}
+.billheader-bg {
+  background-color: rgb(58, 34, 87) !important;
+}
+
+.swal-style {
+  color: white !important;
+  background-color: rgb(21, 5, 41) !important;
+}
+.swal-text {
+  color: white !important;
+}
+
+.swal-icon--success:before {
+  display: none !important;
+}
+.swal-icon--success:after {
+  display: none !important;
+}
+.swal-icon--success__hide-corners {
+  display: none !important;
+}
+
+.blurdiv {
+  position: fixed;
+  top: 50%;
+  right: 50%;
+  transform: translate(-50%, 0%);
+  width: 800px;
+  height: 800px;
+  border-radius: 50% 22% 40% 80%;
+  filter: blur(100px);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(76, 0, 255, 1),
+    rgba(76, 0, 255, 0)
+  );
+  opacity: 0.2;
+}
+.blurdiv2 {
+  position: fixed;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 800px;
+  height: 800px;
+  border-radius: 50% 22% 40% 80%;
+  filter: blur(100px);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(76, 0, 255, 1),
+    rgba(76, 0, 255, 0)
+  );
+  opacity: 0.2;
+}
+
+.logo-style {
+  font-family: "Sofia Sans Extra Condensed", sans-serif;
+  font-size: 30px;
+  /* font-family: "Unbounded", cursive; */
 }
 
 .App-logo {

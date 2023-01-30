@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { PowerHackUserContext } from "../../context/PowerHackUserContext";
 import "./Signup.css";
-
+import { ImPower } from "react-icons/im";
 const Signup = () => {
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ const Signup = () => {
               text: "Sign-up Successful!",
               icon: "success",
               button: "OK!",
-              // className: "modal_class_success",
+              className: "swal-style",
             }).then((isConfirm) => {
               if (isConfirm) {
                 navigate("/billings");
@@ -64,7 +64,8 @@ const Signup = () => {
         <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
           <div className="card border-0 shadow rounded-3 my-5">
             <div className="card-body p-4 p-sm-5">
-              <h5 className="card-title text-center mb-5 fw-light fs-5">
+              <h5 className="card-title text-center mb-5 fw-light fs-3">
+                <ImPower className="text-warning" />
                 Sign Up
               </h5>
               <form onSubmit={handleSubmitSignUp}>
@@ -77,7 +78,9 @@ const Signup = () => {
                     placeholder="Your name"
                     required
                   />
-                  <label htmlFor="floatingInputName">Name</label>
+                  <label htmlFor="floatingInputName" style={{ color: "black" }}>
+                    Name
+                  </label>
                 </div>
                 <div className="form-floating mb-3">
                   <input
@@ -88,7 +91,9 @@ const Signup = () => {
                     placeholder="name@example.com"
                     required
                   />
-                  <label htmlFor="floatingInput">Email address</label>
+                  <label htmlFor="floatingInput" style={{ color: "black" }}>
+                    Email address
+                  </label>
                   <p className="text-danger text-start">{EmailErrorMsg}</p>
                 </div>
                 <div className="form-floating mb-3">
@@ -100,7 +105,9 @@ const Signup = () => {
                     placeholder="Password"
                     required
                   />
-                  <label htmlFor="floatingPassword">Password</label>
+                  <label htmlFor="floatingPassword" style={{ color: "black" }}>
+                    Password
+                  </label>
                 </div>
                 <div className="form-check mb-3 text-start">
                   <input
@@ -129,7 +136,7 @@ const Signup = () => {
                 <p
                   className="text-primary cursor-pointer"
                   style={{ cursor: "pointer" }}
-                  onClick={() => navigate("/singin")}
+                  onClick={() => navigate("/signin")}
                 >
                   Already have an account? Sign in instead.
                 </p>

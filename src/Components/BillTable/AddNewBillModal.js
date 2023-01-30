@@ -16,7 +16,7 @@ function AddNewBillModal({
 }) {
   const [EmailErrorMsg, setEmailErrorMsg] = useState("");
   const [PhoneErrorMsg, setPhoneErrorMsg] = useState("");
-  // const [EmailErrorMsg, setEmailErrorMsg] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -51,7 +51,7 @@ function AddNewBillModal({
               text: res.data.message,
               icon: "success",
               button: "OK!",
-              // className: "modal_class_success",
+              className: "swal-style",
             }).then((isTrue) => {
               if (isTrue) {
                 e.target.reset();
@@ -66,7 +66,7 @@ function AddNewBillModal({
               text: res.data.message,
               icon: "warning",
               button: "OK!",
-              // className: "modal_class_success",
+              className: "swal-style",
             });
           }
         })
@@ -75,24 +75,12 @@ function AddNewBillModal({
             text: e.res.data.message,
             icon: "warning",
             button: "OK!",
-            // className: "modal_class_success",
+            className: "swal-style",
           });
         })
         .finally(() => {});
     }
   };
-
-  // const validateEmail = (email) => {
-  //   let regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-  //   const result = regex.test(email);
-  //   console.log(result);
-  //   if (!result) {
-  //     console.log("df");
-  //     setEmailErrorMsg("Please enter a valid email address");
-  //   }
-  // };
-
-  console.log(EmailErrorMsg, PhoneErrorMsg);
 
   return (
     <>

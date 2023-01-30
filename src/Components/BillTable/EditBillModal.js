@@ -13,7 +13,6 @@ function EditBillModal({
   refetch,
   setRefetch,
 }) {
-  console.log(editData);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,14 +37,14 @@ function EditBillModal({
             text: res.data.message,
             icon: "success",
             button: "OK!",
-            // className: "modal_class_success",
+            className: "swal-style",
           });
         } else {
           swal({
             text: res.data.message,
             icon: "warning",
             button: "OK!",
-            // className: "modal_class_success",
+            className: "swal-style",
           });
         }
       })
@@ -54,7 +53,7 @@ function EditBillModal({
           text: e.res.data.message,
           icon: "warning",
           button: "OK!",
-          // className: "modal_class_success",
+          className: "swal-style",
         });
       })
       .finally(() => {});

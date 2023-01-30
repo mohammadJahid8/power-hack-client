@@ -22,7 +22,7 @@ function BillHeader({
   const handleShowNewBillModal = () => setShowNewBillModal(true);
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar expand="lg" className="billheader-bg">
         <Container fluid>
           <Navbar.Collapse id="navbarScroll">
             <Nav
