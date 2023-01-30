@@ -14,57 +14,81 @@ function AddNewBillModal({
   setGenerating,
   generating,
 }) {
+  const [EmailErrorMsg, setEmailErrorMsg] = useState("");
+  const [PhoneErrorMsg, setPhoneErrorMsg] = useState("");
+  // const [EmailErrorMsg, setEmailErrorMsg] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const email = e.target.email.value;
     const name = e.target.name.value;
     const phone = e.target.phone.value;
     const paidAmount = e.target.paidAmount.value;
 
-    await axios
-      .post("http://localhost:9000/api/add-billing", {
-        email: email,
-        name: name,
-        phone: phone,
-        paidAmount: paidAmount,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          handleCloseNewBillModal();
-          swal({
-            text: res.data.message,
-            icon: "success",
-            button: "OK!",
-            // className: "modal_class_success",
-          }).then((isTrue) => {
-            if (isTrue) {
-              e.target.reset();
-              setGenerating(true);
+    let regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    const result = regex.test(email);
+
+    if (!result) {
+      setEmailErrorMsg("Please enter a valid email address!");
+    } else if (phone.length !== 11) {
+      setEmailErrorMsg("Phone must be 11 digits!");
+    } else {
+      await axios
+        .post("http://localhost:9000/api/add-billing", {
+          email: email,
+          name: name,
+          phone: phone,
+          paidAmount: paidAmount,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            handleCloseNewBillModal();
+            swal({
+              text: res.data.message,
+              icon: "success",
+              button: "OK!",
+              // className: "modal_class_success",
+            }).then((isTrue) => {
+              if (isTrue) {
+                e.target.reset();
+                setGenerating(true);
+                setRefetch(!refetch);
+              }
               setRefetch(!refetch);
-            }
-            setRefetch(!refetch);
-          });
-          // setRefetch(!refetch);
-        } else {
+            });
+            // setRefetch(!refetch);
+          } else {
+            swal({
+              text: res.data.message,
+              icon: "warning",
+              button: "OK!",
+              // className: "modal_class_success",
+            });
+          }
+        })
+        .catch((e) => {
           swal({
-            text: res.data.message,
+            text: e.res.data.message,
             icon: "warning",
             button: "OK!",
             // className: "modal_class_success",
           });
-        }
-      })
-      .catch((e) => {
-        swal({
-          text: e.res.data.message,
-          icon: "warning",
-          button: "OK!",
-          // className: "modal_class_success",
-        });
-      })
-      .finally(() => {});
+        })
+        .finally(() => {});
+    }
   };
+
+  // const validateEmail = (email) => {
+  //   let regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  //   const result = regex.test(email);
+  //   console.log(result);
+  //   if (!result) {
+  //     console.log("df");
+  //     setEmailErrorMsg("Please enter a valid email address");
+  //   }
+  // };
+
+  console.log(EmailErrorMsg, PhoneErrorMsg);
+
   return (
     <>
       <Modal show={showNewBillModal} onHide={handleCloseNewBillModal}>
@@ -91,6 +115,7 @@ function AddNewBillModal({
                 autoFocus
                 name="email"
                 required
+                // onChange={(e) => validateEmail(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
