@@ -13,6 +13,8 @@ function EditBillModal({
   refetch,
   setRefetch,
 }) {
+  const [EmailErrorMsg, setEmailErrorMsg] = useState("");
+  const [PhoneErrorMsg, setPhoneErrorMsg] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,42 +23,56 @@ function EditBillModal({
     const phone = e.target.phone.value;
     const paidAmount = e.target.paidAmount.value;
 
-    await axios
-      .put(`http://localhost:9000/api/update-billing/${editData?._id}`, {
-        email: email,
-        name: name,
-        phone: phone,
-        paidAmount: paidAmount,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          e.target.reset();
-          setRefetch(!refetch);
-          handleCloseEditBillModal();
+    let regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    const result = regex.test(email);
+
+    setPhoneErrorMsg("");
+    setEmailErrorMsg("");
+    if (!result || phone.length !== 11) {
+      if (!result) {
+        setEmailErrorMsg("Please enter a valid email address!");
+      }
+      if (phone.length !== 11) {
+        setPhoneErrorMsg("Phone number must be 11 digits!");
+      }
+    } else {
+      await axios
+        .put(`http://localhost:9000/api/update-billing/${editData?._id}`, {
+          email: email,
+          name: name,
+          phone: phone,
+          paidAmount: paidAmount,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            e.target.reset();
+            setRefetch(!refetch);
+            handleCloseEditBillModal();
+            swal({
+              text: res.data.message,
+              icon: "success",
+              button: "OK!",
+              className: "swal-style",
+            });
+          } else {
+            swal({
+              text: res.data.message,
+              icon: "warning",
+              button: "OK!",
+              className: "swal-style",
+            });
+          }
+        })
+        .catch((e) => {
           swal({
-            text: res.data.message,
-            icon: "success",
-            button: "OK!",
-            className: "swal-style",
-          });
-        } else {
-          swal({
-            text: res.data.message,
+            text: e.res.data.message,
             icon: "warning",
             button: "OK!",
             className: "swal-style",
           });
-        }
-      })
-      .catch((e) => {
-        swal({
-          text: e.res.data.message,
-          icon: "warning",
-          button: "OK!",
-          className: "swal-style",
-        });
-      })
-      .finally(() => {});
+        })
+        .finally(() => {});
+    }
   };
   return (
     <>
@@ -94,6 +110,8 @@ function EditBillModal({
                   required
                   defaultValue={editData.email}
                 />
+
+                <p className="text-danger">{EmailErrorMsg}</p>
               </Form.Group>
               <Form.Group
                 className="mb-3"
@@ -108,6 +126,7 @@ function EditBillModal({
                   required
                   defaultValue={editData.phone}
                 />
+                <p className="text-danger">{PhoneErrorMsg}</p>
               </Form.Group>
               <Form.Group
                 className="mb-3"
