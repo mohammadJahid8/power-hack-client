@@ -184,8 +184,6 @@ function BillTable() {
     );
   }
 
-  console.log(mapData);
-
   return (
     <>
       <HeaderNav />

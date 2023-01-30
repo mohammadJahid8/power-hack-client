@@ -16,7 +16,7 @@ function HeaderNav() {
   const handleLogOut = () => {
     logout();
     return swal({
-      text: "Logout Successful!",
+      text: "Sign Out Successful!",
       icon: "success",
       button: "OK!",
       className: "swal-style",

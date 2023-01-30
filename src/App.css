@@ -25,6 +25,9 @@ body {
 .swal-text {
   color: white !important;
 }
+.swal-title {
+  color: white !important;
+}
 
 .swal-icon--success:before {
   display: none !important;

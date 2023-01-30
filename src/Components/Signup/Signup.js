@@ -48,11 +48,22 @@ const Signup = () => {
               }
             });
           } else {
-            alert(res.data.message);
+            swal({
+              text: res.data.message,
+              icon: "warning",
+              button: "OK!",
+              className: "swal-style",
+            });
           }
         })
         .catch((e) => {
-          alert(e.response?.data?.message);
+          console.dir(e?.response?.data?.message);
+          swal({
+            text: e?.response?.data?.message,
+            icon: "warning",
+            button: "OK!",
+            className: "swal-style",
+          });
         })
         .finally(() => {});
     }
