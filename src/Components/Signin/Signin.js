@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { PowerHackUserContext } from "../../context/PowerHackUserContext";
@@ -8,55 +8,63 @@ const Signin = () => {
   const navigate = useNavigate();
 
   const { user, setUser } = useContext(PowerHackUserContext);
+  const [EmailErrorMsg, setEmailErrorMsg] = useState("");
 
   const handleSubmitSignIn = async (e) => {
     e.preventDefault();
 
     const email = e.target.email.value;
-
     const password = e.target.password.value;
 
-    await axios
-      .post("http://localhost:9000/api/login", {
-        email: email,
+    let regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    const result = regex.test(email);
 
-        password: password,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          e.target.reset();
+    setEmailErrorMsg("");
+    if (!result) {
+      setEmailErrorMsg("Please enter a valid email address!");
+    } else {
+      await axios
+        .post("http://localhost:9000/api/login", {
+          email: email,
 
-          localStorage.setItem("userToken", res.data.token);
-          setUser(res.data.result);
+          password: password,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            e.target.reset();
+
+            localStorage.setItem("userToken", res.data.token);
+            setUser(res.data.result);
+            swal({
+              text: "Sign-in Successful!",
+              icon: "success",
+              button: "OK!",
+              // className: "modal_class_success",
+            }).then((isConfirm) => {
+              if (isConfirm) {
+                navigate("/billings");
+              }
+            });
+          } else {
+            // alert(res.data.message);
+            swal({
+              text: res.data.message,
+              icon: "warning",
+              button: "OK!",
+              // className: "modal_class_success",
+            });
+          }
+        })
+        .catch((e) => {
           swal({
-            text: "Sign-in Successful!",
-            icon: "success",
-            button: "OK!",
-            // className: "modal_class_success",
-          }).then((isConfirm) => {
-            if (isConfirm) {
-              navigate("/billings");
-            }
-          });
-        } else {
-          // alert(res.data.message);
-          swal({
-            text: res.data.message,
+            text: e.response?.data?.message,
             icon: "warning",
             button: "OK!",
             // className: "modal_class_success",
           });
-        }
-      })
-      .catch((e) => {
-        swal({
-          text: e.response?.data?.message,
-          icon: "warning",
-          button: "OK!",
-          // className: "modal_class_success",
-        });
-      })
-      .finally(() => {});
+        })
+        .finally(() => {});
+    }
   };
   return (
     <div className="container">
@@ -75,8 +83,10 @@ const Signin = () => {
                     name="email"
                     id="floatingInput"
                     placeholder="name@example.com"
+                    required
                   />
                   <label htmlFor="floatingInput">Email address</label>
+                  <p className="text-danger text-start">{EmailErrorMsg}</p>
                 </div>
                 <div className="form-floating mb-3">
                   <input
@@ -85,6 +95,7 @@ const Signin = () => {
                     name="password"
                     id="floatingPassword"
                     placeholder="Password"
+                    required
                   />
                   <label htmlFor="floatingPassword">Password</label>
                 </div>

@@ -27,20 +27,14 @@ function AddNewBillModal({
     let regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     const result = regex.test(email);
 
-    console.log(!result || phone.length !== 11);
     setPhoneErrorMsg("");
     setEmailErrorMsg("");
     if (!result || phone.length !== 11) {
-      console.log("inside");
       if (!result) {
-        console.log("inside email");
         setEmailErrorMsg("Please enter a valid email address!");
-        // setPhoneErrorMsg("");
       }
       if (phone.length !== 11) {
-        console.log("inside phone");
         setPhoneErrorMsg("Phone number must be 11 digits!");
-        // setEmailErrorMsg("");
       }
     } else {
       await axios
